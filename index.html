@@ -4,10 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Alyssa</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    html, body { height: 100%; margin: 0; overflow: hidden; }
-    * { box-sizing: border-box; font-family: 'Quicksand', Arial, sans-serif; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    * {
+      font-family: 'Quicksand', sans-serif;
+      box-sizing: border-box;
+    }
+
+    .playfair {
+      font-family: 'Playfair Display', serif;
+    }
+
     body {
       background-color: #fdf6f0;
       background-image:
@@ -15,7 +32,7 @@
         radial-gradient(circle at 80% 20%, rgba(186, 200, 224, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 50% 80%, rgba(210, 190, 220, 0.1) 0%, transparent 50%);
     }
-    .playfair { font-family: 'Playfair Display', Georgia, serif; }
+
     .screen {
       position: absolute;
       inset: 0;
@@ -23,147 +40,317 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      transition: opacity 0.6s ease, transform 0.6s ease;
       padding: 24px;
-      text-align: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+    .screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes envelope-open {
+      0% { transform: rotateX(0deg); }
+      100% { transform: rotateX(-180deg); }
+    }
+
+    @keyframes card-rise {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-120%); }
+    }
+
+    @keyframes flame-flicker {
+      0%, 100% { transform: scaleY(1) scaleX(1); }
+      50% { transform: scaleY(1.15) scaleX(0.9); }
+    }
+
+    @keyframes flame-out {
+      0% { opacity: 1; transform: scaleY(1); }
+      100% { opacity: 0; transform: scaleY(0) translateY(10px); }
+    }
+
+    @keyframes confetti-fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(900px) rotate(720deg); opacity: 0; }
+    }
+
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .sparkle {
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    .envelope-flap {
+      transform-origin: top center;
+    }
+
+    .envelope-flap.open {
+      animation: envelope-open 1s ease forwards;
+    }
+
+    .card-inner.rising {
+      animation: card-rise 1.2s ease 0.6s forwards;
+    }
+
+    .flame-flicker {
+      animation: flame-flicker 0.35s ease-in-out infinite;
+      transform-origin: center bottom;
+    }
+
+    .flame-out {
+      animation: flame-out 0.5s ease forwards;
+      transform-origin: center bottom;
+    }
+
     .btn-elegant {
       background: linear-gradient(135deg, #d4a0a8, #c48b94);
       color: white;
       padding: 14px 40px;
-      border-radius: 999px;
+      border-radius: 50px;
       font-weight: 600;
       letter-spacing: 1px;
       box-shadow: 0 4px 15px rgba(196, 139, 148, 0.4);
-      border: 0;
+      transition: all 0.3s ease;
+      border: none;
       cursor: pointer;
-      font-size: 16px;
     }
-    .btn-elegant:hover { transform: translateY(-2px); }
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes sparkle { 0%,100% { opacity: 0.35; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
-    @keyframes envelope-open { from { transform: rotateX(0); } to { transform: rotateX(-180deg); } }
-    @keyframes card-rise { from { transform: translateY(0); } to { transform: translateY(-120%); } }
-    @keyframes flame-flicker { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1, 0.9); } }
-    @keyframes flame-out { from { opacity: 1; transform: scaleY(1); } to { opacity: 0; transform: scaleY(0) translateY(10px); } }
-    @keyframes confetti-fall { from { transform: translateY(-80px) rotate(0); opacity: 1; } to { transform: translateY(900px) rotate(720deg); opacity: 0; } }
-    @keyframes photo-pop { from { opacity: 0; transform: translateY(-20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    .float { animation: float 3s ease-in-out infinite; }
-    .sparkle { animation: sparkle 2s ease-in-out infinite; }
-    .flame-flicker { animation: flame-flicker 0.35s ease-in-out infinite; transform-origin: center bottom; }
-    .flame-out { animation: flame-out 0.5s ease forwards; transform-origin: center bottom; }
-    .envelope-flap { transform-origin: top center; }
-    .envelope-flap.open { animation: envelope-open 1s ease forwards; }
-    .card-inner.rising { animation: card-rise 1.2s ease 0.5s forwards; }
-    .confetti-piece { position: absolute; top: -20px; animation: confetti-fall linear forwards; }
-    .card { background: white; border: 1px solid #f0e0dd; border-radius: 24px; box-shadow: 0 18px 45px rgba(90,74,79,0.15); padding: 30px; max-width: 390px; width: 100%; }
-    .photo-machine { width: min(320px, 72vw); height: min(420px, 78vh); background: linear-gradient(135deg, #5a4a4f, #6a5a5f); border-radius: 28px; box-shadow: 0 18px 45px rgba(0,0,0,0.22); padding: 20px; position: relative; }
-    .photo-screen { height: 100%; border-radius: 20px; background: linear-gradient(to bottom, #3a2a2f, #2a1a1f); border: 3px solid #4a3a3f; padding: 12px; }
-    #photo-display { height: 100%; background: white; border-radius: 10px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .photo-card { width: 100%; height: 100%; display: flex; flex-direction: column; animation: photo-pop 0.35s ease forwards; }
-    .photo-card img { width: 100%; height: 85%; object-fit: cover; pointer-events: none; }
-    .caption { height: 15%; display: flex; align-items: center; justify-content: center; background: linear-gradient(to right, #f0e0dd, #e8d0d8); color: #5a4a4f; font-size: 13px; font-weight: 600; padding: 0 8px; pointer-events: none; }
-    .arrow { border: 0; border-radius: 999px; background: rgba(255,255,255,0.6); color: #c48b94; font-size: 42px; width: 54px; height: 54px; cursor: pointer; line-height: 1; }
-    .row { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; }
-    @media (max-width: 520px) { .arrow { width: 42px; height: 42px; font-size: 32px; } .card { padding: 22px; } }
+
+    .btn-elegant:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(196, 139, 148, 0.6);
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -20px;
+      animation: confetti-fall linear forwards;
+    }
+
+    #photo-display {
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
+
+  <!-- Start Screen -->
   <div id="screen-start" class="screen">
-    <div>
-      <div class="sparkle" style="margin-bottom: 18px; font-size: 42px; color: #d4a0a8;">✦</div>
-      <h1 class="playfair" style="font-size: clamp(44px, 8vw, 76px); color: #5a4a4f; margin: 0 0 6px;">Happy Birthday</h1>
-      <p class="playfair" style="font-size: clamp(34px, 6vw, 58px); color: #c48b94; font-style: italic; margin: 0 0 36px;">Alyssa</p>
-      <div class="float" style="font-size: 58px; margin-bottom: 30px;">🎂</div>
-      <button type="button" id="start-btn" class="btn-elegant" onclick="goToEnvelope()">Start</button>
+    <div class="text-center px-6">
+      <div class="sparkle inline-block mb-4">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+          <path d="M20 0L23 17L40 20L23 23L20 40L17 23L0 20L17 17Z" fill="#d4a0a8" opacity="0.7" />
+        </svg>
+      </div>
+
+      <h1 class="playfair text-4xl md:text-6xl font-bold mb-3" style="color:#5a4a4f;">
+        Happy Birthday
+      </h1>
+
+      <p class="playfair text-3xl md:text-5xl italic mb-8" style="color:#c48b94;">
+        Alyssa
+      </p>
+
+      <button id="start-btn" class="btn-elegant">Start</button>
     </div>
   </div>
 
+  <!-- Envelope Screen -->
   <div id="screen-envelope" class="screen hidden">
-    <p class="playfair" style="font-size: 23px; color: #6a5a5f; font-style: italic; margin-bottom: 34px;">A special message awaits...</p>
-    <div id="envelope-container" onclick="openEnvelope()" style="width: 280px; height: 200px; position: relative; cursor: pointer;">
-      <div style="position: absolute; inset: 0; border-radius: 12px; background: linear-gradient(180deg, #fdf0ed, #f8e1dc); box-shadow: 0 12px 25px rgba(90,74,79,0.18);"></div>
-      <div id="card-inner" class="card-inner" style="position: absolute; left: 18px; right: 18px; bottom: 18px; top: 38px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; color: #aaa; font-style: italic;">For Alyssa</div>
-      <div id="envelope-flap" class="envelope-flap" style="position: absolute; top: 0; left: 0; right: 0; height: 96px; z-index: 2;">
-        <svg width="100%" height="100%" viewBox="0 0 280 96" preserveAspectRatio="none"><polygon points="0,0 280,0 140,96" fill="#f5d5ce" stroke="#e8bcc2" /></svg>
+    <p class="playfair text-xl text-gray-600 mb-8 italic">
+      A special message awaits...
+    </p>
+
+    <div id="envelope-container" class="relative cursor-pointer" style="width:280px; height:200px;">
+      <div class="absolute inset-0 rounded-lg shadow-lg" style="background:linear-gradient(180deg,#fdf0ed,#f8e1dc);">
+        <div class="absolute inset-2 border border-dashed rounded" style="border-color:#e8bcc2;"></div>
       </div>
-      <div id="envelope-seal" style="position: absolute; top: 56px; left: 50%; transform: translateX(-50%); z-index: 3; width: 42px; height: 42px; border-radius: 50%; background: #c48b94; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 2px 8px rgba(196,139,148,0.5);">♥</div>
+
+      <div id="card-inner" class="card-inner absolute left-4 right-4 bottom-4 top-8 rounded bg-white shadow-md flex items-center justify-center">
+        <span class="playfair text-sm text-gray-400 italic">For Alyssa</span>
+      </div>
+
+      <div id="envelope-flap" class="envelope-flap absolute top-0 left-0 right-0 h-24 z-10">
+        <svg width="100%" height="100%" viewBox="0 0 280 96" preserveAspectRatio="none">
+          <polygon points="0,0 280,0 140,96" fill="#f5d5ce" stroke="#e8bcc2" />
+        </svg>
+      </div>
+
+      <div id="envelope-seal" class="absolute top-14 left-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center" style="background:#c48b94;">
+        ❤️
+      </div>
     </div>
-    <p style="font-size: 14px; color: #999; margin-top: 26px;">Tap the envelope to open</p>
+
+    <p class="text-sm text-gray-400 mt-6">Tap the envelope to open</p>
   </div>
 
+  <!-- Card Screen -->
   <div id="screen-card" class="screen hidden">
-    <div class="card">
-      <div style="font-size: 40px; margin-bottom: 12px;"><span class="float" style="display:inline-block;">🎈</span> <span class="float" style="display:inline-block; animation-delay:.4s;">🎂</span> <span class="float" style="display:inline-block; animation-delay:.8s;">🎁</span></div>
-      <h2 class="playfair" style="font-size: 30px; color: #5a4a4f; margin: 0 0 12px;">Happy Birthday, Alyssa!</h2>
-      <svg id="cake-svg" width="130" height="120" viewBox="0 0 130 120" style="cursor: pointer; margin: 8px auto 0; display: block;">
-        <ellipse cx="65" cy="106" rx="55" ry="8" fill="#f0e6e3" stroke="#e0d0cc" />
-        <rect x="25" y="70" width="80" height="30" rx="4" fill="#f0d8d4" />
-        <rect x="40" y="45" width="50" height="28" rx="4" fill="#e4d8ec" />
-        <rect x="62" y="25" width="6" height="22" rx="3" fill="#ffecd2" stroke="#f0d4a8" />
-        <g id="candle-flame"><ellipse cx="65" cy="18" rx="5" ry="8" fill="#ffb347" class="flame-flicker" /><ellipse cx="65" cy="19" rx="2.5" ry="4" fill="#fff4cc" /></g>
-        <circle cx="40" cy="82" r="2" fill="#c48b94" opacity="0.7" /><circle cx="55" cy="86" r="1.5" fill="#a8bdd9" opacity="0.7" /><circle cx="75" cy="80" r="2" fill="#c9aed2" opacity="0.7" /><circle cx="90" cy="84" r="1.5" fill="#c48b94" opacity="0.7" />
-      </svg>
-      <p style="font-size: 14px; color: #8a7a7f; margin: 8px 0 14px;">✨ Tap the candle to blow it out ✨</p>
-      <div id="continue-area" style="display:none; margin-bottom: 14px;"><button class="btn-elegant" style="font-size:14px; padding: 11px 26px;" onclick="goToMemories()">Continue</button></div>
-      <div style="border-top: 1px solid #f0e0dd; padding-top: 18px; margin-top: 8px;">
-        <p class="playfair" style="font-size: 15px; line-height: 1.55; color: #6a5a5f; font-style: italic; margin: 0;">Dear Alyssa, HAPPY BIRTHDAY!! I'm so glad that I was able to meet you in grade 9. On that fateful day when we sat next to each other in math class, I knew that we would become friends. Thank you for being one of my best friends. I hope you have the best birthday ever! 💕</p>
-        <p style="font-size: 13px; color: #c48b94; font-weight: 600; margin-top: 14px;">Love, Sarah 🤍</p>
+    <div class="relative w-full max-w-sm mx-auto px-4">
+      <div class="bg-white rounded-2xl shadow-xl p-6 pt-8 border" style="border-color:#f0e0dd;">
+        <div class="flex justify-center gap-3 mb-4">
+          <div class="text-4xl float">🎈</div>
+          <div class="text-4xl float" style="animation-delay:0.4s;">🎂</div>
+          <div class="text-4xl float" style="animation-delay:0.8s;">🎁</div>
+        </div>
+
+        <h2 class="playfair text-2xl font-bold text-center mb-2" style="color:#5a4a4f;">
+          Happy Birthday, Alyssa!
+        </h2>
+
+        <div class="flex justify-center my-4">
+          <svg id="cake-svg" width="130" height="120" viewBox="0 0 130 120" style="cursor:pointer;">
+            <ellipse cx="65" cy="106" rx="55" ry="8" fill="#f0e6e3" />
+            <rect x="25" y="70" width="80" height="30" rx="4" fill="#f0d8d4" />
+            <rect x="40" y="45" width="50" height="28" rx="4" fill="#e4d8ec" />
+            <rect x="62" y="25" width="6" height="22" rx="3" fill="#ffecd2" />
+
+            <g id="candle-flame">
+              <ellipse cx="65" cy="18" rx="5" ry="8" fill="#ffb347" class="flame-flicker" />
+              <ellipse cx="65" cy="19" rx="2.5" ry="4" fill="#fff4cc" />
+            </g>
+          </svg>
+        </div>
+
+        <p class="text-center text-sm mb-3" style="color:#8a7a7f;">
+          ✨ Tap the candle to blow it out ✨
+        </p>
+
+        <div id="blow-btn-container" class="hidden text-center mb-4">
+          <button id="continue-btn" class="btn-elegant text-sm">Continue</button>
+        </div>
+
+        <div class="border-t pt-4 mt-2" style="border-color:#f0e0dd;">
+          <p class="playfair text-center italic text-sm leading-relaxed" style="color:#6a5a5f;">
+            Dear Alyssa, HAPPY BIRTHDAY!! I'm so glad that I was able to meet you in grade 9.
+            On that fateful day when we sat next to each other in math class, I knew that we would become friends.
+            Thank you for being one of my best friends. I hope you have the best birthday ever! 💕
+          </p>
+
+          <p class="text-center mt-3 text-xs font-medium" style="color:#c48b94;">
+            Love, Sarah 🤍
+          </p>
+        </div>
       </div>
     </div>
-    <div id="confetti-container" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;"></div>
+
+    <div id="confetti-container" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
   </div>
 
+  <!-- Photo Booth Screen -->
   <div id="screen-memories" class="screen hidden">
-    <h2 class="playfair" style="font-size: 36px; color: #5a4a4f; margin: 0 0 6px;">Photo Booth</h2>
-    <p style="font-size: 15px; color: #999; margin: 0 0 20px;">Love you lots! ✨</p>
-    <div class="row">
-      <button type="button" id="prev-btn" class="arrow" onclick="prevPhoto()">‹</button>
-      <div class="photo-machine">
-        <div class="photo-screen"><div id="photo-display" onclick="nextPhoto()">Ready for photos...</div></div>
-        <p style="position:absolute; bottom: 3px; left: 0; right: 0; color: white; font-size: 13px; font-family: monospace;"><span id="photo-counter">1</span> / <span id="photo-total">3</span></p>
+    <h2 class="playfair text-3xl font-bold mb-2" style="color:#5a4a4f;">
+      Photo Booth
+    </h2>
+
+    <p class="text-sm text-gray-400 mb-4">
+      Love you lots! ✨
+    </p>
+
+    <div class="flex items-center justify-center gap-4 w-full">
+      <button id="prev-btn" class="p-3 rounded-full hover:bg-white transition text-4xl" style="color:#c48b94;">
+        ‹
+      </button>
+
+      <div class="relative rounded-3xl shadow-2xl p-5" style="width:320px; height:420px; background:linear-gradient(135deg,#5a4a4f,#6a5a5f);">
+        <div class="rounded-2xl h-full p-3" style="background:linear-gradient(to bottom,#3a2a2f,#2a1a1f); border:3px solid #4a3a3f;">
+          <div id="photo-display" class="w-full h-full rounded-lg bg-white overflow-hidden flex items-center justify-center text-gray-400">
+            Ready for photos...
+          </div>
+        </div>
+
+        <p class="absolute bottom-2 left-0 right-0 text-white text-center text-sm" style="font-family:'Courier New', monospace;">
+          <span id="photo-counter">1</span> / <span id="photo-total">8</span>
+        </p>
       </div>
-      <button type="button" id="next-btn" class="arrow" onclick="nextPhoto()">›</button>
+
+      <button id="next-btn" class="p-3 rounded-full hover:bg-white transition text-4xl" style="color:#c48b94;">
+        ›
+      </button>
     </div>
-    <p style="font-size: 13px; color: #999; margin-top: 18px;">Click the photo or use the arrows</p>
+
+    <p class="text-xs text-gray-400 mt-4">
+      Click the photo or use the arrows
+    </p>
   </div>
 
   <script>
-    const screenIds = ['screen-start', 'screen-envelope', 'screen-card', 'screen-memories'];
+    const screens = [
+      'screen-start',
+      'screen-envelope',
+      'screen-card',
+      'screen-memories'
+    ];
+
     let envelopeOpened = false;
     let currentPhotoIndex = 0;
+
     const memories = [
-      { src: 'https://placehold.co/280x360/d4a0a8/ffffff?text=Photo+1', caption: 'Sarah & Alyssa' },
-      { src: 'https://placehold.co/280x360/bac8e0/ffffff?text=Photo+2', caption: 'Best Friends' },
-      { src: 'https://placehold.co/280x360/c9aed2/ffffff?text=Photo+3', caption: 'Forever Memories' }
+      { src: "photos/photo1.jpeg" },
+      { src: "photos/photo2.jpg" },
+      { src: "photos/photo4.jpg" },
+      { src: "photos/photo5.jpg" },
+      { src: "photos/photo6.jpeg" },
+      { src: "photos/photo7.jpeg" },
+      { src: "photos/photo8.jpeg" },
+      { src: "photos/photo10.JPG" }
     ];
 
     function showScreen(id) {
-      screenIds.forEach(function(screenId) {
+      screens.forEach(screenId => {
         document.getElementById(screenId).classList.add('hidden');
       });
+
       document.getElementById(id).classList.remove('hidden');
     }
 
-    function goToEnvelope() { showScreen('screen-envelope'); }
+    function goToEnvelope() {
+      showScreen('screen-envelope');
+    }
 
     function openEnvelope() {
       if (envelopeOpened) return;
+
       envelopeOpened = true;
+
       document.getElementById('envelope-flap').classList.add('open');
+
       const seal = document.getElementById('envelope-seal');
       seal.style.transition = 'opacity 0.5s';
       seal.style.opacity = '0';
+
       document.getElementById('card-inner').classList.add('rising');
-      setTimeout(function() { showScreen('screen-card'); }, 1800);
+
+      setTimeout(() => {
+        showScreen('screen-card');
+      }, 2200);
     }
 
     function blowOutCandle() {
       const flame = document.getElementById('candle-flame');
-      flame.querySelectorAll('ellipse').forEach(function(el) { el.classList.add('flame-out'); });
+
+      flame.querySelectorAll('ellipse').forEach(el => {
+        el.classList.add('flame-out');
+      });
+
       triggerConfetti();
-      setTimeout(function() { document.getElementById('continue-area').style.display = 'block'; }, 700);
+
+      setTimeout(() => {
+        document.getElementById('blow-btn-container').classList.remove('hidden');
+      }, 900);
     }
 
     function goToMemories() {
@@ -173,21 +360,45 @@
 
     function displayPhoto(index) {
       currentPhotoIndex = (index + memories.length) % memories.length;
+
       const photo = memories[currentPhotoIndex];
       const display = document.getElementById('photo-display');
-      display.innerHTML = '<div class="photo-card"><img src="' + photo.src + '" alt="' + photo.caption + '"><div class="caption">' + photo.caption + '</div></div>';
+
+      display.innerHTML = `
+        <img
+          src="${photo.src}"
+          alt="Photo"
+          style="
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+            cursor:pointer;
+          "
+        >
+      `;
+
+      display.onclick = nextPhoto;
+
       document.getElementById('photo-counter').textContent = currentPhotoIndex + 1;
       document.getElementById('photo-total').textContent = memories.length;
     }
 
-    function nextPhoto() { displayPhoto(currentPhotoIndex + 1); }
-    function prevPhoto() { displayPhoto(currentPhotoIndex - 1); }
+    function nextPhoto() {
+      displayPhoto(currentPhotoIndex + 1);
+    }
+
+    function prevPhoto() {
+      displayPhoto(currentPhotoIndex - 1);
+    }
 
     function triggerConfetti() {
       const container = document.getElementById('confetti-container');
       const colors = ['#d4a0a8', '#bac8e0', '#c9aed2', '#ffecd2', '#c48b94', '#a8bdd9'];
+
       for (let i = 0; i < 60; i++) {
         const piece = document.createElement('div');
+
         piece.className = 'confetti-piece';
         piece.style.left = Math.random() * 100 + '%';
         piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
@@ -196,22 +407,31 @@
         piece.style.height = Math.random() * 8 + 5 + 'px';
         piece.style.animationDuration = Math.random() * 2 + 2 + 's';
         piece.style.animationDelay = Math.random() + 's';
+
         container.appendChild(piece);
       }
-      setTimeout(function() { container.innerHTML = ''; }, 5000);
+
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 5000);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('start-btn').onclick = goToEnvelope;
-      document.getElementById('envelope-container').onclick = openEnvelope;
-      document.getElementById('cake-svg').onclick = blowOutCandle;
-      document.getElementById('photo-display').onclick = nextPhoto;
-      document.addEventListener('keydown', function(e) {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('start-btn').addEventListener('click', goToEnvelope);
+      document.getElementById('envelope-container').addEventListener('click', openEnvelope);
+      document.getElementById('cake-svg').addEventListener('click', blowOutCandle, { once: true });
+      document.getElementById('continue-btn').addEventListener('click', goToMemories);
+      document.getElementById('next-btn').addEventListener('click', nextPhoto);
+      document.getElementById('prev-btn').addEventListener('click', prevPhoto);
+
+      document.addEventListener('keydown', (e) => {
         if (document.getElementById('screen-memories').classList.contains('hidden')) return;
+
         if (e.key === 'ArrowRight') nextPhoto();
         if (e.key === 'ArrowLeft') prevPhoto();
       });
     });
   </script>
+
 </body>
 </html>
