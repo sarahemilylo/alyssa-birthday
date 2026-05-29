@@ -35,19 +35,6 @@ The website guides visitors through several stages:
 
 ---
 
-## 📸 Screenshots
-
-Add screenshots of your website here after deployment.
-
-```text
-Welcome Screen
-Envelope Animation
-Birthday Card
-Photo Booth Gallery
-```
-
----
-
 ## 📂 Project Structure
 
 ```text
@@ -115,14 +102,6 @@ main → /root
 - JavaScript
 - Tailwind CSS
 - GitHub Pages
-
----
-
-## 💖 About This Project
-
-This website was created as a birthday gift to celebrate Alyssa and highlight some of the memories shared over the years.
-
-From opening a birthday envelope to browsing a collection of photos, the goal was to create a fun and interactive experience that feels personal and meaningful.
 
 ---
 
